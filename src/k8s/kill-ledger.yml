@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Schedule
+metadata:
+  name: kill-ledger-schedule
+  namespace: chaos-testing
+spec:
+  schedule: "@every 2m"
+  type: PodChaos
+  podChaos:
+    action: pod-kill
+    mode: one
+    selector:
+      namespaces:
+        - banking
+      labelSelectors:
+        app: ledger-service
+    duration: "30s"

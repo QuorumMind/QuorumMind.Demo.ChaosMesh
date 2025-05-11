@@ -1,0 +1,11 @@
+dashboard:
+  create: true
+
+controllerManager:
+  enableFilterNamespace: true
+  targetNamespaces:
+    - banking
+
+chaosDaemon:
+  runtime: containerd
+  socketPath: /run/containerd/containerd.sock

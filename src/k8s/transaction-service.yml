@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+  namespace: banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+        chaos: "true"
+    spec:
+      containers:
+        - name: transaction-service
+          image: transaction-service:local-1
+          env:
+            - name: POSTGRES_DSN
+              value: postgres://postgres:postgres@postgres:5432/transactions?sslmode=disable
+            - name: KAFKA_BROKER
+              value: host.docker.internal:9092
+          ports:
+            - containerPort: 8080
